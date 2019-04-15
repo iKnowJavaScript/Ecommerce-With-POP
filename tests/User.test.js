@@ -38,6 +38,7 @@ describe("Update user details", function() {
   expect(
     martins.updateDetails("NewMartins", "martins@gmail.com", "pass1234")
   ).toReturn({});
+  expect(victor.updateDetails("NewMartins", "martins@gmail.com", "pass1234")).toMatch(/User with this name already exist/)
 });
 
 describe("Find user by their username", function() {
