@@ -8,6 +8,11 @@ describe("Testing User Instances and saving it to Database", function() {
 
     expect(martins).toBeDefined();
   });
+  it("Checking if isAdmin is false", function() {
+    let martins = new User("Martins", "test@gmail.com", "pass1234");
+
+    expect(martins.isAdmin).toBeFalsy();
+  });
   it("Saving instances to Database", function() {
     let martins = new User("Martins", "test@gmail.com", "pass1234");
 
