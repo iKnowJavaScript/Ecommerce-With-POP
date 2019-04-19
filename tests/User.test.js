@@ -91,3 +91,20 @@ describe("Find user by their Name", function() {
     expect(user2.findUserByName("Martins")).toBeDefined();
   });
 });
+
+describe("Creating Orders", function() {
+  let user1;
+  beforeEach(function() {
+    user1 = new User("Martins", "martins@gmail.com", "pass1234");
+    user1.save();
+  });
+  it("Input must be a String", function() {
+    expect(user1.createOrder(2)).toMatch(/Invalid Input/);
+  });
+  it("Input must not be Empty", function() {
+    expect(user1.createOrder()).toMatch(/Invalid Input/);
+  });
+  it("Return a valid Order object", function() {
+    expect(user1.createOrder("iPhone X")).toBeDefined();
+  });
+});
