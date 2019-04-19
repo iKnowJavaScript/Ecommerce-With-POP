@@ -21,3 +21,28 @@ describe("Testing User Instances and saving it to Database", function() {
   });
 });
 
+describe("Updating user details", function() {
+  let martins, victor;
+  beforeEach(function() {
+    martins = new User("Martins", "martins@gmail.com", "pass1234");
+    victor = new User("Victor", "victor@gmail.com", "pass1234");
+    martins.save();
+    victor.save();
+  });
+  it("Validating user input before updating the Databae", function() {
+    expect(martins.updateDetail(4444, "martins@gmail.com", "newPass")).toMatch(
+      /Input a valid details/
+    );
+  });
+  it("Checking Email before accepting changes", function() {
+    expect(
+      victor.updateDetail("NewVictor", "martins@gmail.com", "pass1234")
+    ).toMatch(/User with this email already exist/);
+  });
+  it("Updating user details on Valid inputs", function() {
+    expect(martins.updateDetail("New", "martins@gmail.com", "newPass")).toMatch(
+      /Updated Succesfully/
+    );
+  });
+});
+
