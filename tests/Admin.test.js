@@ -43,3 +43,26 @@ describe("Updating Admin details", function() {
     );
   });
 });
+
+describe("Find Admin/User by their Id", function() {
+  let admin1;
+  let admin2;
+  beforeEach(function() {
+    admin1 = new Admin("Martins", "martins@gmail.com", "pass1234");
+    admin1.save();
+    admin2 = new Admin("Victor", "victor@gmail.com", "pa234");
+    admin2.save();
+  });
+  it("Input must be a Number", function() {
+    expect(admin1.findById("admin1")).toMatch(/Please input a valid userId/);
+  });
+  it("Input must not be Empty", function() {
+    expect(admin2.findById()).toMatch(/Please input a valid userId/);
+  });
+  it("Id must be a valid registered user ID", function() {
+    expect(admin2.findById(33)).toMatch(/Not found/);
+  });
+  it("Return a valid user if input is a valid User ID", function() {
+    expect(admin2.findById(1)).toBeDefined();
+  });
+});
