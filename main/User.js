@@ -1,113 +1,94 @@
-let db = [];
-let userIdRef = 0;
+const Order = require("./Order");
+const { saveUserToDb, userDatabase, updateUsertoDB } = require("../fs");
 
-function increment(ref) {
-  return ref == 0 ? (ref = 1) : ++ref;
-}
+let counter = userDatabase.length;
 
 const User = function(name, email, password) {
   this.name = name;
   this.password = password;
   this.email = email;
-  this.id = increment(userIdRef);
-
-  //fix argument length
-  this.create = function(name, email, password) {
-
-    let paraLenght = arguments.length;
-    if (paraLenght < 3 || paraLenght > 3) return "All paarameter must be filled";
-
-    for (let arg = 0; arg < paraLenght; arg++) {
-      if (typeof arguments[arg] !== "string") {
-        throw new Error("All field must be filled correctly");
-      }
-    }
-
-    for (let item of db) {
-      if (item.name === this.name) {
-        console.log(
-          "Please choose a valid Name, User with this name already exist"
-        );
-        return;
-      }
-    }
-
-    let user = {
-      id: this.id,
-      name: this.name,
-      email: this.email,
-      password: this.password
-    };
-
-    userIdRef = user.id; // update id with the incrementation
-
-    db.push(user);
-
-    console.log("Succesfully Added to Database");
-  };
-
-  //specific to the user and admin
-  this.updateDetail = function(name, email, password) {
-    for (let i = 0; i < arguments.length; i++) {
-      if (typeof arguments[i] !== "string") return `Input a valid details`;
-    }
-
-    //search if the new name is already taken
-    for (let item of db) {
-      if (item.name === name && item.id !== this.id) {
-        console.log("User with this name already exist");
-        return;
-      }
-    }
-
-    return db.forEach(item => {
-      if (item.id == this.id) {
-        item.name = name;
-        item.email = email;
-        item.password = password;
-      }
-    });
-  };
+  this.isAdmin = false;
+  this.id = ++counter;
 };
 
-//find user by id
-User.prototype.findById = function(idSearch) {
-  if (typeof idSearch !== "number") return "Input must be a valid userId";
-
-  for (let user of db) {
-    if (user.id === idSearch) return user;
+function getId(email) {
+  for (let item of userDatabase) {
+    if (item.email === email) {
+      return item.id;
+    }
   }
-  return "User not found";
+}
+
+User.prototype.save = function() {
+  for (let user of userDatabase) {
+    if (user.email === this.email) {
+      return "Email already exist.";
+    }
+  }
+
+  let user = {
+    id: this.id,
+    name: this.name,
+    email: this.email,
+    isAdmin: this.isAdmin,
+    password: this.password
+  };
+
+  saveUserToDb(user);
+  console.log("Succesfully Added to Database");
+  return user;
 };
 
-//find a user by name
+User.prototype.updateDetail = function(name, email, password) {
+  for (let i = 0; i < arguments.length; i++) {
+    if (typeof arguments[i] !== "string") return `Input a valid details`;
+  }
+
+  //search if the new email is already taken
+  let id = getId(this.email);
+  if (!id) return "Input a valid user email address";
+
+  for (let item of userDatabase) {
+    if (item.email === email && item.id !== id) {
+      return "User with this email already exist";
+    }
+  }
+
+  userDatabase.forEach(function(item) {
+    if (item.id === id) {
+      item.name = name;
+      item.email = email;
+      item.password = password;
+    }
+  });
+  updateUsertoDB(userDatabase);
+  return "Updated Succesfully";
+};
+
+User.prototype.findById = function(idSearch) {
+  if (typeof idSearch !== "number") return "Please input a valid userId";
+
+  for (let user of userDatabase) {
+    if (user.id === idSearch && user.isAdmin === false) return user;
+  }
+  return "Not found";
+};
+
 User.prototype.findUserByName = function(name) {
   if (typeof name !== "string") return "Input must be a valid username";
 
-  for (let user of db) {
-    if (user.name === name) {
-      return user;
-    }
+  for (let user of userDatabase) {
+    if (user.name === name && user.isAdmin === false)  return user;
   }
-  return "No such user in Database";
+  return "Not found";
 };
 
-
-User.prototype = Object.create(Order.prototype);
-
-//Pointing User constructor to itself so it can override properties
-User.prototype.constructor = User;
-
+// Implememnting Create Order for Users
 User.prototype.createOrder = function(product) {
+  if (typeof product !== "string") return "Invalid Input.";
   let order = new Order(product);
-  return order.makeOrder(product, (user_id = this.id));
+
+  return order.makeOrder(product, (user_id = getId(this.email)));
 };
 
-
-const martins = new User("Martins", "gmail@email", "pass1234");
-const charles = new User("Charles", "gmail@email", "pass1234");
-const joseph = new User("Joseph", "gmail@email", "pass1234");
-const sodeeq = new User("Sodeeq", "gmail@email", "pass1234");
-
-//console.log(martins)
-console.log(db);
+module.exports = { User, userDatabase };
