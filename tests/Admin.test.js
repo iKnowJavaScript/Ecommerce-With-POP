@@ -66,3 +66,26 @@ describe("Find Admin/User by their Id", function() {
     expect(admin2.findById(1)).toBeDefined();
   });
 });
+
+describe("Find Admin/User by their Name", function() {
+  let admin1;
+  let admin2;
+  beforeEach(function() {
+    admin1 = new Admin("Martins", "martins@gmail.com", "pass1234");
+    admin1.save();
+    admin2 = new Admin("Victor", "victor@gmail.com", "pa234");
+    admin2.save();
+  });
+  it("Input must be a String", function() {
+    expect(admin1.findUserByName(2)).toMatch(/Input must be a valid username/);
+  });
+  it("Input must not be Empty", function() {
+    expect(admin2.findUserByName()).toMatch(/Input must be a valid username/);
+  });
+  it("Name must be a valid registered User Name", function() {
+    expect(admin2.findUserByName("Lekan")).toMatch(/Not found/);
+  });
+  it("Return a valid user if input is a valid User Name", function() {
+    expect(admin2.findUserByName("Martins")).toBeDefined();
+  });
+});
