@@ -1,33 +1,28 @@
-let db = [];
+const { saveOrderToDb, orderDatabase } = require("../fs");
 
-let orderIdRef = 0;
-function increment(ref) {
-  return ref == 0 ? (ref = 1) : ++ref;
-}
+let counter = orderDatabase.length;
 
 const Order = function(product) {
-  this.id = increment(orderIdRef);
-  //this.user_id = this.id;
-
+  this.id = ++counter;
+  this.product = product;
   this.timeOfOrder = new Date().toLocaleTimeString();
   this.dateOfOrder = new Date().toLocaleDateString();
-  this.product = product;
 };
 
 Order.prototype.makeOrder = function(product, user_id) {
   let order = {
-    id: this.id,
+    orderId: this.id,
     timeOfOrder: this.timeOfOrder,
     dateOfOrder: this.dateOfOrder,
     product: product,
     user_id: user_id
   };
-  console.log(order);
 
-  orderIdRef = order.id; // update id with the incrementation
-
-  db.push(order);
+  saveOrderToDb(order);
 
   return "Order Succesfully Added to Database";
 };
 
+module.exports = Order;
+
+//console.log(database)
