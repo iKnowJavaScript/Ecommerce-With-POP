@@ -89,3 +89,20 @@ describe("Find Admin/User by their Name", function() {
     expect(admin2.findUserByName("Martins")).toBeDefined();
   });
 });
+
+describe("Creating Orders", function() {
+  let admin;
+  beforeEach(function() {
+    admin = new Admin("Martins", "martins@gmail.com", "pass1234");
+    admin.save();
+  });
+  it("Input must be a String", function() {
+    expect(admin.createOrder(2)).toMatch(/Invalid Input/);
+  });
+  it("Input must not be Empty", function() {
+    expect(admin.createOrder()).toMatch(/Invalid Input/);
+  });
+  it("Return a valid Order object", function() {
+    expect(admin.createOrder("iPhone X")).toBeDefined();
+  });
+});
