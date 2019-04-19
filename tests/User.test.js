@@ -62,11 +62,32 @@ describe("Find user by their Id", function() {
     expect(user2.findById()).toMatch(/Please input a valid userId/);
   });
   it("Id must be a valid registered user ID", function() {
-    expect(user2.findById(33)).toMatch(/User not found/);
+    expect(user2.findById(33)).toMatch(/Not found/);
   });
   it("Return a valid user if input is a valid User ID", function() {
     expect(user2.findById(1)).toBeDefined();
   });
 });
 
-
+describe("Find user by their Name", function() {
+  let user1;
+  let user2;
+  beforeEach(function() {
+    user1 = new User("Martins", "martins@gmail.com", "pass1234");
+    user1.save();
+    user2 = new User("Victor", "victor@gmail.com", "pa234");
+    user2.save();
+  });
+  it("Input must be a String", function() {
+    expect(user1.findUserByName(2)).toMatch(/Input must be a valid username/);
+  });
+  it("Input must not be Empty", function() {
+    expect(user2.findUserByName()).toMatch(/Input must be a valid username/);
+  });
+  it("Name must be a valid registered User Name", function() {
+    expect(user2.findUserByName("Lekan")).toMatch(/Not found/);
+  });
+  it("Return a valid user if input is a valid User Name", function() {
+    expect(user2.findUserByName("Martins")).toBeDefined();
+  });
+});
