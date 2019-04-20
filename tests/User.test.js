@@ -67,46 +67,36 @@ describe("Find user by their Id", function() {
   });
 });
 
-// describe("Find user by their Name", function() {
-//   let user1;
-//   let user2;
-//   beforeEach(function() {
-//     user1 = new User("Martins", "martins@gmail.com", "pass1234");
-//     user1.save();
-//     user2 = new User("Victor", "victor@gmail.com", "pa234");
-//     user2.save();
-//   });
-//   it("Input must be a String", function() {
-//     expect(user1.findUserByName(2)).toMatch(/Input must be a valid username/);
-//   });
-//   it("Input must not be Empty", function() {
-//     expect(user2.findUserByName()).toMatch(/Input must be a valid username/);
-//   });
-//   it("Name must be a valid registered User Name", function() {
-//     expect(user2.findUserByName("Lekan")).toMatch(/Not found/);
-//   });
-//   it("Return a valid user if input is a valid User Name", function() {
-//     expect(user2.findUserByName("Martins")).toEqual({ id: 3,
-//       name: 'Martins',
-//       email: 'test@gmail.com',
-//       isAdmin: false,
-//       password: 'pass1234' });
-//   });
-// });
+describe("Find user by their Name", function() {
+  it("Input must be a String", function() {
+    expect(martins.findUserByName(2)).toMatch(/Input must be a valid username/);
+  });
+  it("Input must not be Empty", function() {
+    expect(martins.findUserByName()).toMatch(/Input must be a valid username/);
+  });
+  it("Name must be a valid registered User Name", function() {
+    expect(martins.findUserByName("Lekan")).toMatch(/Not found/);
+  });
+  it("Return a valid user if input is a valid User Name", function() {
+    expect(victor.findUserByName("NewMartins")).toEqual({
+      id: 1,
+      name: "NewMartins",
+      email: "martins@gmail.com",
+      isAdmin: false,
+      password: "newPass"
+    });
+  });
+});
 
-// describe("Creating Orders", function() {
-//   let user1;
-//   beforeEach(function() {
-//     user1 = new User("Martins", "martins@gmail.com", "pass1234");
-//     user1.save();
-//   });
-//   it("Input must be a String", function() {
-//     expect(user1.createOrder(2)).toMatch(/Invalid Input/);
-//   });
-//   it("Input must not be Empty", function() {
-//     expect(user1.createOrder()).toMatch(/Invalid Input/);
-//   });
-//   it("Return a valid Order object", function() {
-//     expect(user1.createOrder("iPhone X")).toBeDefined();
-//   });
-// });
+describe("Creating Orders", function() {
+  it("Product must be a String", function() {
+    expect(victor.createOrder(2)).toMatch(/Invalid Product Name/);
+  });
+  it("Input must not be Empty", function() {
+    expect(victor.createOrder()).toMatch(/Invalid Product Name/);
+  });
+  it("Return a valid Order object", function() {
+    
+    expect(victor.createOrder("iPhone X")).toBeDefined();
+  });
+});

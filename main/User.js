@@ -87,7 +87,7 @@ User.prototype.findUserByName = function(name) {
 
 // Implememnting Create Order for Users
 User.prototype.createOrder = function(product) {
-  if (typeof product !== "string") return "Invalid Input.";
+  if (typeof product !== "string") return "Invalid Product Name";
   let order = new Order(product);
 
   return order.makeOrder(product, (user_id = getId(this.email)));
