@@ -55,44 +55,26 @@ describe("Update  an Order from the Database", function() {
     expect(order.update(122, "update")).toMatch(/Product not found/);
   });
   it("Return Succes if found", function() {
-    console.log(order.all)
     expect(order.update(2, "updated")).toMatch(/Updated Succesfully/);
   });
 });
 
-// describe("Delete an Order from the Database", function() {
-//   let order;
-//   let order2;
-//   beforeEach(function() {
-//     order = new Order();
-//     order.makeOrder("Cup", 2);
-//     order2 = new Order();
-//     order2.makeOrder("Cap", 4);
-//   });
-//   it("Return Error if input is wrong format", function() {
-//     expect(order.deleteById("one")).toMatch(/Input must be a valid order ID/);
-//   });
-//   it("Return false if order is not found", function() {
-//     expect(order.deleteById(122222222222222, "update")).toMatch(
-//       /Product not found/
-//     );
-//   });
-//   it("Return Succes if found", function() {
-//     order.makeOrder("Cup", 2);
-//     expect(order.deleteById(2)).toMatch(/Order has been deleted/);
-//   });
-// });
+describe("Delete an Order from the Database", function() {
+  it("Return Error if input is wrong format", function() {
+    expect(order.deleteById("one")).toMatch(/Input must be a valid order ID/);
+  });
+  it("Return false if order is not found", function() {
+    expect(order.deleteById(122222222222222, "update")).toMatch(
+      /Product not found/
+    );
+  });
+  it("Return Succes if found", function() {
+    expect(order.deleteById(2)).toMatch(/Order has been deleted/);
+  });
+});
 
-// describe("Delete all Order from the Database", function() {
-//   let order;
-//   let order2;
-//   beforeEach(function() {
-//     order = new Order();
-//     order.makeOrder("Cup", 2);
-//     order2 = new Order();
-//     order2.makeOrder("Cap", 4);
-//   });
-//   it("Return empty array", function() {
-//     expect(order.deleteAll()).toHaveLength(0);
-//   });
-// });
+describe("Delete all Order from the Database", function() {
+  it("Return empty array", function() {
+    expect(order.deleteAll()).toHaveLength(0);
+  });
+});

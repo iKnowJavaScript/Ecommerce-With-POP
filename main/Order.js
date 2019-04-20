@@ -42,18 +42,16 @@ Order.prototype.update = function(orderId, product) {
     return `Order Id must be Number`;
   if (product === "" || typeof product !== "string") return `Invalid Product`;
 
-  let orders = [];
-  for (let order of orderDatabase) {
+  let match = orderDatabase.find(order => order.orderId === orderId);
+  if (match == undefined) return "Product not found";
+
+  orderDatabase.map(order => {
     if (order.orderId === orderId) {
       order.product = product;
-      orders.push(order);
-    } else {
-      orders.push(order);
     }
-  }
-  if (orders == orderDatabase) return "Product not found"; //if id not found
+  });
 
-  updateOrderToDB(orders);
+  updateOrderToDB(orderDatabase);
   return "Updated Succesfully";
 };
 
@@ -83,8 +81,6 @@ Order.prototype.deleteAll = function() {
   console.log("All order has been deleted");
   return (orderDatabase = []);
 };
-
-Order.prototype.all = orderDatabase;
 
 module.exports = { Order };
 
