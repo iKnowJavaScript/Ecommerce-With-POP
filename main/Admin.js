@@ -18,7 +18,7 @@ Admin.prototype.constructor = Admin;
 
 
 Admin.prototype.readAllUser = function() {
-  return console.log(userDatabase);
+  return userDatabase.filter(user => user.isAdmin === false);
 };
 
 Admin.prototype.deleteUser = function(email) {
@@ -27,7 +27,7 @@ Admin.prototype.deleteUser = function(email) {
   let newDb = [];
 
   for (let user of userDatabase) {
-    if (user.email === email) {
+    if (user.email === email & user.isAdmin === false) {
       continue;
     } else {
       newDb.push(user);
@@ -36,9 +36,9 @@ Admin.prototype.deleteUser = function(email) {
 
   if (newDb.length !== userDatabase.length) {
     updateUsertoDB(newDb);
-    console.log("User has been deleted");
+    return "User has been deleted";
   } else {
-    console.log("No such username in the database");
+    return "No such username in the database";
   }
 };
 
@@ -49,15 +49,17 @@ Admin.prototype.deleteAllUser = function() {
 };
 
 Admin.prototype.readAllOdders = function() {
-  return console.log(userDatabase);
+  return orderDatabase;
 };
 
 Admin.prototype.readSingleOrder = function(orderId) {
+  if(orderId === "" || typeof orderId !== "number") return "Input a valid Order ID"
+
   orderDatabase = orderDatabase.filter(order => order.orderId === orderId);
 
   return orderDatabase.length < 1
-    ? console.log("Order not found")
-    : console.log(orderDatabase);
+    ? "Order not found"
+    : orderDatabase;
 };
 
 Admin.prototype.updateOrder = function(orderId, product) {
@@ -100,5 +102,7 @@ Admin.prototype.deleteAllOrder = function() {
 
 module.exports = { Admin };
 
-const admin = new Admin("admin", "admin@gmail.com", "newPass123")
-console.log(admin.save());
+// const admin = new Admin("admin", "admin@gmail.com", "newPass123")
+
+// console.log(admin.save())
+// console.log(admin.readAllUser());

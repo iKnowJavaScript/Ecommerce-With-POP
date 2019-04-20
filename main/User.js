@@ -3,6 +3,7 @@ const { saveUserToDb, userDatabase, updateUsertoDB } = require("../fs");
 
 let counter = userDatabase.length;
 
+
 const User = function(name, email, password) {
   this.name = name;
   this.password = password;
@@ -66,7 +67,7 @@ User.prototype.updateDetail = function(name, email, password) {
 };
 
 User.prototype.findById = function(idSearch) {
-  if (typeof idSearch !== "number") return "Please input a valid userId";
+  if (idSearch === "" || typeof idSearch !== "number") return "Please input a valid userId";
 
   for (let user of userDatabase) {
     if (user.id === idSearch && user.isAdmin === false) return user;
@@ -75,7 +76,7 @@ User.prototype.findById = function(idSearch) {
 };
 
 User.prototype.findUserByName = function(name) {
-  if (typeof name !== "string") return "Input must be a valid username";
+  if (name === "" || typeof name !== "string") return "Input must be a valid username";
 
   for (let user of userDatabase) {
     if (user.name === name && user.isAdmin === false)  return user;
