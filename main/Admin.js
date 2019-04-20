@@ -49,18 +49,12 @@ Admin.prototype.deleteAllUser = function() {
   return (userDatabase = []);
 };
 
-Admin.prototype.readAllOdders = function() {
-  return new Order().readAllOdders();
+Admin.prototype.getAllOrders = function() {
+  return new Order().readAllOrders();
 };
 
 Admin.prototype.readSingleOrder = function(orderId) {
-  if(orderId === "" || typeof orderId !== "number") return "Input a valid Order ID"
 
-  orderDatabase = orderDatabase.filter(order => order.orderId === orderId);
-
-  return orderDatabase.length < 1
-    ? "Order not found"
-    : orderDatabase;
 };
 
 Admin.prototype.updateOrder = function(orderId, product) {
