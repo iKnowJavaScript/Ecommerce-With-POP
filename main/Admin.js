@@ -2,9 +2,7 @@ const { User } = require("./User");
 const { Order } = require("./Order");
 let {
   userDatabase,
-  updateUsertoDB,
-  orderDatabase,
-  updateOrderToDB
+  updateUsertoDB
 } = require("../fs");
 
 const Admin = function(name, email, password) {

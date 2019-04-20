@@ -32,9 +32,9 @@ Order.prototype.readSingle = function(orderId) {
   if (orderId === "" || typeof orderId !== "number")
     return "Input a valid Order ID";
 
-  orderDatabase = orderDatabase.filter(order => order.orderId === orderId);
+  let order = orderDatabase.find(order => order.orderId === orderId);
 
-  return orderDatabase.length < 1 ? "Order not found" : orderDatabase;
+  return !order ? "Order not found" : order;
 };
 
 Order.prototype.update = function(orderId, product) {
@@ -42,19 +42,18 @@ Order.prototype.update = function(orderId, product) {
     return `Order Id must be Number`;
   if (product === "" || typeof product !== "string") return `Invalid Product`;
 
-  let initLen = orderDatabase.length;
-
-  orderDatabase.forEach(function(order) {
+  let orders = [];
+  for (let order of orderDatabase) {
     if (order.orderId === orderId) {
       order.product = product;
+      orders.push(order);
+    } else {
+      orders.push(order);
     }
-  });
+  }
+  if (orders == orderDatabase) return "Product not found"; //if id not found
 
-  let updateLen = orderDatabase.length;
-
-  if (initLen === updateLen) return "Product not found";
-
-  updateOrderToDB(orderDatabase);
+  updateOrderToDB(orders);
   return "Updated Succesfully";
 };
 
@@ -84,6 +83,8 @@ Order.prototype.deleteAll = function() {
   console.log("All order has been deleted");
   return (orderDatabase = []);
 };
+
+Order.prototype.all = orderDatabase;
 
 module.exports = { Order };
 
