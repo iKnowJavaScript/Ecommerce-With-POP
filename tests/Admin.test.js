@@ -104,62 +104,39 @@ describe("Creating Orders", function() {
   });
 });
 
-// describe("Reading all Users", function() {
-//   let admin;
-//   let user1;
-//   let user2;
-//   beforeEach(function() {
-//     admin = new Admin("Martins", "admin@gmail.com", "pass1234");
-//     // user1 = new User("Martins", "martins@gmail.com", "pass1234");
-//     // user1.save();
-//     // user2 = new User("Victor", "victor@gmail.com", "pa234");
-//     // user2.save();
-//   });
-//   it("Get all Users from Database", function() {
-//     expect(admin.readAllUser()).toBeDefined();
-//   });
-//   it("To contain just two added user", function() {
-//     let userDB = admin.readAllUser();
-//     expect(userDB).toHaveLength(1);
-//   });
-// });
+describe("Reading all Users", function() {
+  it("Get all Users from Database", function() {
+    let userDB = admin.readAllUser();
+    expect(userDB).toHaveLength(2);
+  });
+});
 
-// describe("Deleting a single User", function() {
-//   it("Checking Input", function() {
-//     let admin;
-//     let user;
-//     admin = new Admin("Martins", "admin@gmail.com", "pass1234");
-//     user = new User("Martins", "martins@gmail.com", "pass1234");
-//     user.save();
-//     expect(admin.deleteUser()).toMatch(/Input must be a valid email address/);
-//   });
-//   it("When user was not found in the database", function() {
-//     let admin;
-//     let user;
-//     admin = new Admin("Martins", "admin@gmail.com", "pass1234");
-//     user = new User("Martins", "martins@gmail.com", "pass1234");
-//     user.save();
-//     expect(admin.deleteUser("lilMail.com")).toMatch(
-//       /No such username in the database/
-//     );
-//   });
-//   it("Success on operation successfull", function() {
-//     let admin;
-//     let user;
-//     admin = new Admin("Martins", "admin@gmail.com", "pass1234");
-//     user = new User("Martins", "newmail.com", "pass1234");
-//     user.save();
-//     expect(admin.deleteUser("newmail.com")).toMatch(/User has been deleted/);
-//   });
-// });
+describe("Deleting a single User", function() {
+  it("Checking Input", function() {
+    expect(admin.deleteUser()).toMatch(/Input must be a valid email address/);
+  });
+  it("When user was not found in the database", function() {
+    expect(admin.deleteUser("lilMail.com")).toMatch(
+      /No such username in the database/
+    );
+  });
+  it("Success on operation successfull", function() {
+    let user = new User("newUser", "user@gmail.com", "pass1234");
+    user.save();
+    expect(admin.deleteUser("user@gmail.com")).toMatch(/User has been deleted/);
+  });
+});
 
-// describe("Deleting all User", function() {
-//   it("Checking Input", function() {
-//     let admin;
-//     let user;
-//     admin = new Admin("Martins", "admin@gmail.com", "pass1234");
-//     user = new User("Martins", "martins@gmail.com", "pass1234");
-//     user.save();
-//     expect(admin.deleteAllUser()).toEqual([]);
-//   });
-// });
+describe("Deleting all User", function() {
+  it("Should delete All Users except Admins", function() {
+    expect(admin.deleteAllUser()).toEqual([
+      {
+        id: 3,
+        name: "Admin",
+        email: "realAdmin@gmail.com",
+        isAdmin: true,
+        password: "newPass"
+      }
+    ]);
+  });
+});

@@ -1,5 +1,5 @@
 const { User } = require("./User");
-const {Order} = require("./Order")
+const { Order } = require("./Order");
 let {
   userDatabase,
   updateUsertoDB,
@@ -17,7 +17,6 @@ Admin.prototype = Object.create(User.prototype);
 //Pointing Admin constructor to itself so it can override properties
 Admin.prototype.constructor = Admin;
 
-
 Admin.prototype.readAllUser = function() {
   return userDatabase.filter(user => user.isAdmin === false);
 };
@@ -28,7 +27,7 @@ Admin.prototype.deleteUser = function(email) {
   let newDb = [];
 
   for (let user of userDatabase) {
-    if (user.email === email & user.isAdmin === false) {
+    if ((user.email === email) & (user.isAdmin === false)) {
       continue;
     } else {
       newDb.push(user);
@@ -45,8 +44,16 @@ Admin.prototype.deleteUser = function(email) {
 
 //Delete all user
 Admin.prototype.deleteAllUser = function() {
+  let admins = [];
+  for (let user of userDatabase) {
+    if (user.isAdmin === true) {
+      admins.push(user);
+    } else {
+      continue;
+    }
+  }
   console.log("All user has been deleted");
-  return (userDatabase = []);
+  return (userDatabase = admins);
 };
 
 Admin.prototype.getAllOrders = function() {
