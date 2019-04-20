@@ -2,29 +2,29 @@ const { User } = require("../main/User");
 
 jest.mock("../fs");
 
-// describe("Testing User Instances and saving it to Database", function() {
-//   it("creating new User instance", function() {
-//     let martins = new User("Martins", "test@gmail.com", "pass1234");
+let martins = new User("Martins", "martins@gmail.com", "pass1234");
+let victor = new User("Victor", "victor@gmail.com", "pass1234");
 
-//     expect(martins).toBeDefined();
-//   });
-//   it("Checking if isAdmin is false", function() {
-//     let martins = new User("Martins", "test@gmail.com", "pass1234");
+describe("Testing User Instances and saving it to Database", function() {
+  it("creating new User instance", function() {
+    expect(martins).toBeDefined();
+  });
+  it("Checking if isAdmin is false", function() {
+    expect(martins.isAdmin).toBeFalsy();
+  });
+  it("Saving instances to Database", function() {
+    expect(martins.save()).toMatchObject(martins);
+  });
+  it("Should return Error when trying to register a multiple member with thesame details", function() {
+    let anotherMartins = new User("Martins", "martins@gmail.com", "pass1234");
+    martins.save();
+    expect(anotherMartins.save()).toMatch(/ERROR REGISTERING/);
+  });
 
-//     expect(martins.isAdmin).toBeFalsy();
-//   });
-//   it("Saving instances to Database", function() {
-//     let martins = new User("Martins", "test@gmail.com", "pass1234");
-
-//     expect(martins.save()).toMatchObject(martins);
-//   });
-
-//   it("New User instances with JS 'instanceOf' ", function() {
-//     let martins = new User("Martins", "test@gmail.com", "pass1234");
-
-//     expect(martins instanceof User).toBeTruthy();
-//   });
-// });
+  it("New User instances with JS 'instanceOf' ", function() {
+    expect(martins instanceof User).toBeTruthy();
+  });
+});
 
 // describe("Updating user details", function() {
 //   let martins, victor;
@@ -39,7 +39,7 @@ jest.mock("../fs");
 //       /Input a valid details/
 //     );
 //   });
-  
+
 //   it("Checking Email before accepting changes", function() {
 //     expect(
 //       victor.updateDetail("NewVictor", "martins@gmail.com", "pass1234")

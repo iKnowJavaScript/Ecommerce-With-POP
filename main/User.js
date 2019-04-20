@@ -94,4 +94,6 @@ User.prototype.createOrder = function(product) {
   return order.makeOrder(product, (user_id = getId(this.email)));
 };
 
+//User.prototype.all = userDatabase;
+
 module.exports = { User, userDatabase };
