@@ -3,6 +3,10 @@ const { User } = require("../main/User");
 
 jest.mock("../fs");
 
+const user = new User("new", "new", "new")
+user.save()
+console.log(user.all)
+
 // describe("Testing Admin Instances and saving it to Database", function() {
 //   it("Creating new Admin instance", function() {
 //     let admin = new Admin("Martins", "test@gmail.com", "pass1234");
