@@ -22,7 +22,7 @@ function getId(email) {
 User.prototype.save = function() {
   for (let user of userDatabase) {
     if (user.email === this.email) {
-      return "Email already exist.";
+      return "ERROR REGISTERING: Email already exist.";
     }
   }
 

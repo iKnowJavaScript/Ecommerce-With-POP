@@ -27,6 +27,13 @@
       "email": "User@anymail",
       "isAdmin": false,
       "password": "pass1234"
+    },
+    {
+      "id": 5,
+      "name": "admin",
+      "email": "admin@gmail.com",
+      "isAdmin": true,
+      "password": "newPass123"
     }
   ],
   "orders": [
