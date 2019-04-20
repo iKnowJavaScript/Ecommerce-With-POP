@@ -10,6 +10,7 @@ const Order = function(product) {
 };
 
 Order.prototype.makeOrder = function(product, user_id) {
+  if(!user_id) return "Please Input a valid User ID"
   let order = {
     orderId: this.id,
     timeOfOrder: this.timeOfOrder,

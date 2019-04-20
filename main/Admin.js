@@ -103,7 +103,7 @@ Admin.prototype.deleteAllOrder = function() {
 
 module.exports = { Admin };
 
-const admin = new Admin("admin", "admin@gmail.com", "newPass123")
+// const admin = new Admin("admin", "admin@gmail.com", "newPass123")
 
-console.log(admin.save())
-console.log(admin.readAllOdders());
+// console.log(admin.save())
+// console.log(admin.readAllOdders());
