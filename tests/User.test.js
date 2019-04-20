@@ -26,61 +26,46 @@ describe("Testing User Instances and saving it to Database", function() {
   });
 });
 
-// describe("Updating user details", function() {
-//   let martins, victor;
-//   beforeEach(function() {
-//     martins = new User("Martins", "martins@gmail.com", "pass1234");
-//     victor = new User("Victor", "victor@gmail.com", "pass1234");
-//     martins.save();
-//     victor.save();
-//   });
-//   it("Validating user input before updating the Databae", function() {
-//     expect(martins.updateDetail(4444, "martins@gmail.com", "newPass")).toMatch(
-//       /Input a valid details/
-//     );
-//   });
+describe("Updating user details", function() {
+  it("Validating user input before updating the Databae", function() {
+    expect(martins.updateDetail(4444, "martins@gmail.com", "newPass")).toMatch(
+      /Input a valid details/
+    );
+  });
 
-//   it("Checking Email before accepting changes", function() {
-//     expect(
-//       victor.updateDetail("NewVictor", "martins@gmail.com", "pass1234")
-//     ).toMatch(/User with this email already exist/);
-//   });
-//   it("Updating user details on Valid inputs", function() {
-//     expect(martins.updateDetail("New", "martins@gmail.com", "newPass")).toMatch(
-//       /Updated Succesfully/
-//     );
-//   });
-// });
+  it("Checking Email before accepting changes", function() {
+    victor.save();
+    expect(
+      victor.updateDetail("NewVictor", "martins@gmail.com", "pass1234")
+    ).toMatch(/User with this email already exist/);
+  });
+  it("Updating user details on Valid inputs", function() {
+    expect(
+      martins.updateDetail("NewMartins", "martins@gmail.com", "newPass")
+    ).toMatch(/Updated Succesfully/);
+  });
+});
 
-// describe("Find user by their Id", function() {
-//   let user1;
-//   let user2;
-//   beforeEach(function() {
-//     user1 = new User("Martins", "martins@gmail.com", "pass1234");
-//     user1.save();
-//     user2 = new User("Victor", "victor@gmail.com", "pa234");
-//     user2.save();
-//   });
-//   it("Input must be a Number", function() {
-//     expect(user1.findById("user1")).toMatch(/Please input a valid userId/);
-//   });
-//   it("Input must not be Empty", function() {
-//     expect(user2.findById()).toMatch(/Please input a valid userId/);
-//   });
-//   it("Id must be a valid registered user ID", function() {
-//     expect(user2.findById(33)).toMatch(/Not found/);
-//   });
-//   it("Return a valid user if input is a valid User ID", function() {
-
-//     expect(user2.findById(3)).toEqual({
-//       id: 3,
-//       name: "Martins",
-//       email: "test@gmail.com",
-//       isAdmin: false,
-//       password: "pass1234"
-//     });
-//   });
-// });
+describe("Find user by their Id", function() {
+  it("Input must be a Number", function() {
+    expect(martins.findById("user1")).toMatch(/Please input a valid userId/);
+  });
+  it("Input must not be Empty", function() {
+    expect(martins.findById()).toMatch(/Please input a valid userId/);
+  });
+  it("ID must be a valid registered user ID", function() {
+    expect(martins.findById(3333)).toMatch(/Not found/);
+  });
+  it("Return a valid user if input is a valid User ID", function() {
+    expect(martins.findById(2)).toEqual({
+      id: 2,
+      name: "Victor",
+      email: "victor@gmail.com",
+      isAdmin: false,
+      password: "pass1234"
+    });
+  });
+});
 
 // describe("Find user by their Name", function() {
 //   let user1;

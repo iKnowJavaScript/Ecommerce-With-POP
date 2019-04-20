@@ -46,7 +46,6 @@ User.prototype.updateDetail = function(name, email, password) {
 
   //search if the new email is already taken
   let id = getId(this.email);
-  if (!id) return "Input a valid user email address";
 
   for (let item of userDatabase) {
     if (item.email === email && item.id !== id) {
@@ -94,6 +93,6 @@ User.prototype.createOrder = function(product) {
   return order.makeOrder(product, (user_id = getId(this.email)));
 };
 
-//User.prototype.all = userDatabase;
+User.prototype.all = userDatabase;
 
 module.exports = { User, userDatabase };
