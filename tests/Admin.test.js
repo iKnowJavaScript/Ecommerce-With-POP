@@ -1,5 +1,6 @@
 const { Admin } = require("../main/Admin");
 const { User } = require("../main/User");
+const { Order } = require("../main/Order");
 
 jest.mock("../fs");
 
@@ -8,6 +9,9 @@ let victor = new User("Victor", "victor@gmail.com", "pass1234");
 let admin = new Admin("Admin", "admin@gmail.com", "admin01");
 martins.save();
 victor.save();
+
+let newOrder = new Order();
+newOrder.makeOrder("Tea", 2);
 
 describe("Testing Admin Instances and saving it to Database", function() {
   it("creating new Admin instance", function() {
@@ -138,5 +142,70 @@ describe("Deleting all User", function() {
         password: "newPass"
       }
     ]);
+  });
+});
+
+
+//Order Test Case
+describe("Read all Order from the Database", function() {
+  it("Should return all orders form the DB", function() {
+    let orderDB = admin.getAllOrders();
+
+    expect(orderDB).toBeDefined();
+    expect(orderDB).toHaveLength(1);
+  });
+});
+
+describe("Read a single Order from the Database", function() {
+  it("Return Error if input is wrong", function() {
+    let orderDB = admin.readSingleOrder("oldOrder");
+
+    expect(orderDB).toMatch(/Input a valid Order ID/);
+  });
+  it("Return false if order is not found", function() {
+    let orderDB = admin.readSingleOrder(123456);
+
+    expect(orderDB).toMatch(/Order not found/);
+  });
+  it("Return order object if found", function() {
+    let orderDB = admin.readSingleOrder(1);
+
+    expect(orderDB).toBeDefined();
+    expect(orderDB).toHaveProperty("product");
+  });
+});
+
+describe("Update  an Order from the Database", function() {
+  it("Return Error if input is wrong format", function() {
+    expect(admin.updateOrder("one", "update")).toMatch(
+      /Order Id must be Number/
+    );
+    expect(admin.updateOrder(1, "")).toMatch(/Invalid Product/);
+  });
+  it("Return false if order is not found", function() {
+    expect(admin.updateOrder(122, "update")).toMatch(/Product not found/);
+  });
+  it("Return Succes if found", function() {
+    expect(admin.updateOrder(1, "updated")).toMatch(/Updated Succesfully/);
+  });
+});
+
+describe("Delete an Order from the Database", function() {
+  it("Return Error if input is wrong format", function() {
+    expect(admin.deleteOrder("one")).toMatch(/Input must be a valid order ID/);
+  });
+  it("Return false if order is not found", function() {
+    expect(admin.deleteOrder(122222222222222, "update")).toMatch(
+      /Product not found/
+    );
+  });
+  it("Return Succes if found", function() {
+    expect(admin.deleteOrder(1)).toMatch(/Order has been deleted/);
+  });
+});
+
+describe("Delete all Order from the Database", function() {
+  it("Return empty array", function() {
+    expect(admin.deleteAllOrder()).toHaveLength(0);
   });
 });

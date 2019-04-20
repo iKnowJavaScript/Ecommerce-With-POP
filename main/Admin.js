@@ -2,7 +2,8 @@ const { User } = require("./User");
 const { Order } = require("./Order");
 let {
   userDatabase,
-  updateUsertoDB
+  updateUsertoDB,
+  orderDatabase
 } = require("../fs");
 
 const Admin = function(name, email, password) {
@@ -63,7 +64,7 @@ Admin.prototype.readSingleOrder = function(orderId) {
 };
 
 Admin.prototype.updateOrder = function(orderId, product) {
-  return new Order().updateOrder(orderId, product);
+  return new Order().update(orderId, product);
 };
 
 Admin.prototype.deleteOrder = function(orderId) {
@@ -74,7 +75,7 @@ Admin.prototype.deleteAllOrder = function() {
   return new Order().deleteAll();
 };
 
-Admin.prototype.AllOrders = new Order().all;
+Admin.prototype.AllOrders = orderDatabase;
 module.exports = { Admin };
 
 // const admin = new Admin("admin", "admin@gmail.com", "newPass123")
