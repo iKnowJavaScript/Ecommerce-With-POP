@@ -23,6 +23,7 @@ Order.prototype.makeOrder = function(product, user_id) {
   return "Order Succesfully Added to Database";
 };
 
-module.exports = Order;
+
+module.exports = { Order };
 
 //console.log(database)

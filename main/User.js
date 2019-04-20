@@ -1,8 +1,7 @@
-const Order = require("./Order");
+const { Order } = require("./Order");
 const { saveUserToDb, userDatabase, updateUsertoDB } = require("../fs");
 
 let counter = userDatabase.length;
-
 
 const User = function(name, email, password) {
   this.name = name;
@@ -67,7 +66,8 @@ User.prototype.updateDetail = function(name, email, password) {
 };
 
 User.prototype.findById = function(idSearch) {
-  if (idSearch === "" || typeof idSearch !== "number") return "Please input a valid userId";
+  if (idSearch === "" || typeof idSearch !== "number")
+    return "Please input a valid userId";
 
   for (let user of userDatabase) {
     if (user.id === idSearch && user.isAdmin === false) return user;
@@ -76,10 +76,11 @@ User.prototype.findById = function(idSearch) {
 };
 
 User.prototype.findUserByName = function(name) {
-  if (name === "" || typeof name !== "string") return "Input must be a valid username";
+  if (name === "" || typeof name !== "string")
+    return "Input must be a valid username";
 
   for (let user of userDatabase) {
-    if (user.name === name && user.isAdmin === false)  return user;
+    if (user.name === name && user.isAdmin === false) return user;
   }
   return "Not found";
 };

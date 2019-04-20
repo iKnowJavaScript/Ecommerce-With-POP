@@ -1,4 +1,5 @@
 const { User } = require("./User");
+const {Order} = require("./Order")
 let {
   userDatabase,
   updateUsertoDB,
@@ -49,7 +50,7 @@ Admin.prototype.deleteAllUser = function() {
 };
 
 Admin.prototype.readAllOdders = function() {
-  return orderDatabase;
+  return Order.readAllOdders();
 };
 
 Admin.prototype.readSingleOrder = function(orderId) {
