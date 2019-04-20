@@ -1,4 +1,4 @@
-let { saveOrderToDb, orderDatabase } = require("../fs");
+let { saveOrderToDb, orderDatabase, updateOrderToDB } = require("../fs");
 
 let counter = orderDatabase.length;
 
@@ -24,11 +24,11 @@ Order.prototype.makeOrder = function(product, user_id) {
   return "Order Succesfully Added to Database";
 };
 
-Order.prototype.readAllOrders = function() {
+Order.prototype.readAll = function() {
   return orderDatabase;
 };
 
-Order.prototype.readSingleOrder = function(orderId) {
+Order.prototype.readSingle = function(orderId) {
   if (orderId === "" || typeof orderId !== "number")
     return "Input a valid Order ID";
 
@@ -37,8 +37,59 @@ Order.prototype.readSingleOrder = function(orderId) {
   return orderDatabase.length < 1 ? "Order not found" : orderDatabase;
 };
 
+Order.prototype.update = function(orderId, product) {
+  if (orderId === "" || typeof orderId !== "number")
+    return `Order Id must be Number`;
+  if (product === "" || typeof product !== "string") return `Invalid Product`;
+
+  let initLen = orderDatabase.length;
+
+  orderDatabase.forEach(function(order) {
+    if (order.orderId === orderId) {
+      order.product = product;
+    }
+  });
+
+  let updateLen = orderDatabase.length;
+
+  if (initLen === updateLen) return "Product not found";
+
+  updateOrderToDB(orderDatabase);
+  return "Updated Succesfully";
+};
+
+Order.prototype.deleteById = function(orderId) {
+  if (orderId === "" || typeof orderId !== "number")
+    return "Input must be a valid order ID";
+
+  let newDb = [];
+
+  for (let order of orderDatabase) {
+    if (order.orderId === orderId) {
+      continue;
+    } else {
+      newDb.push(order);
+    }
+  }
+
+  if (newDb.length !== orderDatabase.length) {
+    updateOrderToDB(newDb);
+    return "Order has been deleted";
+  } else {
+    return "Product not found";
+  }
+};
+
+Order.prototype.deleteAll = function() {
+  console.log("All order has been deleted");
+  return (orderDatabase = []);
+};
+
 module.exports = { Order };
 
-// let order = new Order("Cup");
-// console.log(order.makeOrder("Cup", 2));
-// console.log(order.readSingleOrder(3))
+// let order = new Order();
+// console.log(order.update(5, "CupNew"));
+// // console.log(order.readSingleOrder(3))
+// console.log(order.makeOrder("sbdsnjdks", 3));
+
+// console.log(orderDatabase)

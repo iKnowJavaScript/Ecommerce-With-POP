@@ -50,49 +50,23 @@ Admin.prototype.deleteAllUser = function() {
 };
 
 Admin.prototype.getAllOrders = function() {
-  return new Order().readAllOrders();
+  return new Order().readAll();
 };
 
 Admin.prototype.readSingleOrder = function(orderId) {
-  return new Order().readSingleOrder();
+  return new Order().readSingle(orderId);
 };
 
 Admin.prototype.updateOrder = function(orderId, product) {
-  if (typeof product !== "string") return `Input valid details`;
-
-  orderDatabase.forEach(function(order) {
-    if (order.orderId === orderId) {
-      order.product = product;
-    }
-  });
-  updateOrderToDB(orderDatabase);
-  console.log("Updated Succesfully");
+  return new Order().updateOrder(orderId, product);
 };
 
 Admin.prototype.deleteOrder = function(orderId) {
-  if (typeof orderId !== "number") return "Input must be a valid order ID";
-
-  let newDb = [];
-
-  for (let order of orderDatabase) {
-    if (order.orderId === orderId) {
-      continue;
-    } else {
-      newDb.push(order);
-    }
-  }
-
-  if (newDb.length !== orderDatabase.length) {
-    updateOrderToDB(newDb);
-    console.log("Order has been deleted");
-  } else {
-    console.log("No such username in the database");
-  }
+  return new Order().deleteById(orderId);
 };
 
 Admin.prototype.deleteAllOrder = function() {
-  console.log("All order has been deleted");
-  return (orderDatabase = []);
+  return new Order().deleteAll();
 };
 
 module.exports = { Admin };

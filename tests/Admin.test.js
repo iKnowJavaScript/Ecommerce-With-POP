@@ -64,18 +64,21 @@ describe("Find Admin/User by their Id", function() {
     expect(admin2.findById(33)).toMatch(/Not found/);
   });
   it("Return a valid user if input is a valid User ID", function() {
-    expect(admin2.findById(1)).toBeDefined();
+    expect(admin2.findById(15)).toBeDefined();
   });
 });
 
 describe("Find Admin/User by their Name", function() {
   let admin1;
   let admin2;
+  let user;
   beforeEach(function() {
     admin1 = new Admin("Martins", "martins@gmail.com", "pass1234");
     admin1.save();
     admin2 = new Admin("Victor", "victor@gmail.com", "pa234");
     admin2.save();
+    user = new User("New User", "new@gmail.com", "pa234");
+    user.save();
   });
   it("Input must be a String", function() {
     expect(admin1.findUserByName(2)).toMatch(/Input must be a valid username/);
@@ -87,7 +90,13 @@ describe("Find Admin/User by their Name", function() {
     expect(admin2.findUserByName("Lekan")).toMatch(/Not found/);
   });
   it("Return a valid user if input is a valid User Name", function() {
-    expect(admin2.findUserByName("Martins")).toBeDefined();
+    expect(admin1.findUserByName("New User")).toEqual({
+      id: 17,
+      name: "New User",
+      email: "new@gmail.com",
+      isAdmin: false,
+      password: "pa234"
+    });
   });
 });
 
@@ -114,18 +123,17 @@ describe("Reading all Users", function() {
   let user2;
   beforeEach(function() {
     admin = new Admin("Martins", "admin@gmail.com", "pass1234");
-    user1 = new User("Martins", "martins@gmail.com", "pass1234");
-    user1.save();
-    user2 = new User("Victor", "victor@gmail.com", "pa234");
-    user2.save();
+    // user1 = new User("Martins", "martins@gmail.com", "pass1234");
+    // user1.save();
+    // user2 = new User("Victor", "victor@gmail.com", "pa234");
+    // user2.save();
   });
   it("Get all Users from Database", function() {
     expect(admin.readAllUser()).toBeDefined();
   });
   it("To contain just two added user", function() {
     let userDB = admin.readAllUser();
-
-    expect(userDB).toEqual([]);
+    expect(userDB).toHaveLength(1);
   });
 });
 
@@ -168,4 +176,3 @@ describe("Deleting all User", function() {
     expect(admin.deleteAllUser()).toEqual([]);
   });
 });
-

@@ -72,6 +72,7 @@ User.prototype.findById = function(idSearch) {
   for (let user of userDatabase) {
     if (user.id === idSearch && user.isAdmin === false) return user;
   }
+  
   return "Not found";
 };
 

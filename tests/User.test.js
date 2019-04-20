@@ -39,6 +39,7 @@ describe("Updating user details", function() {
       /Input a valid details/
     );
   });
+  
   it("Checking Email before accepting changes", function() {
     expect(
       victor.updateDetail("NewVictor", "martins@gmail.com", "pass1234")
@@ -70,7 +71,14 @@ describe("Find user by their Id", function() {
     expect(user2.findById(33)).toMatch(/Not found/);
   });
   it("Return a valid user if input is a valid User ID", function() {
-    expect(user2.findById(1)).toBeDefined();
+
+    expect(user2.findById(3)).toEqual({
+      id: 3,
+      name: "Martins",
+      email: "test@gmail.com",
+      isAdmin: false,
+      password: "pass1234"
+    });
   });
 });
 
@@ -93,7 +101,11 @@ describe("Find user by their Name", function() {
     expect(user2.findUserByName("Lekan")).toMatch(/Not found/);
   });
   it("Return a valid user if input is a valid User Name", function() {
-    expect(user2.findUserByName("Martins")).toBeDefined();
+    expect(user2.findUserByName("Martins")).toEqual({ id: 3,
+      name: 'Martins',
+      email: 'test@gmail.com',
+      isAdmin: false,
+      password: 'pass1234' });
   });
 });
 
