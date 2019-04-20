@@ -3,123 +3,106 @@ const { User } = require("../main/User");
 
 jest.mock("../fs");
 
-const user = new User("new", "new", "new")
-user.save()
-console.log(user.all)
+let martins = new User("Martins", "martins@gmail.com", "pass1234");
+let victor = new User("Victor", "victor@gmail.com", "pass1234");
+let admin = new Admin("Admin", "admin@gmail.com", "admin01");
+martins.save();
+victor.save();
 
-// describe("Testing Admin Instances and saving it to Database", function() {
-//   it("Creating new Admin instance", function() {
-//     let admin = new Admin("Martins", "test@gmail.com", "pass1234");
+describe("Testing Admin Instances and saving it to Database", function() {
+  it("creating new Admin instance", function() {
+    expect(admin).toBeDefined();
+  });
+  it("Checking if isAdmin is false", function() {
+    expect(admin.isAdmin).toBeTruthy();
+  });
+  it("Saving instances to Database", function() {
+    expect(admin.save()).toMatchObject(admin);
+  });
 
-//     expect(admin).toBeDefined();
-//   });
-//   it("Checking if isAdmin is true", function() {
-//     let admin = new Admin("Martins", "test@gmail.com", "pass1234");
+  it("Checking Admin instances with JS 'instanceOf' ", function() {
+    expect(admin instanceof Admin).toBeTruthy();
+  });
+});
 
-//     expect(admin.isAdmin).toBeTruthy();
-//   });
-//   it("Saving instances to Database", function() {
-//     let admin = new Admin("Martins", "test@gmail.com", "pass1234");
+describe("Updating Admin details", function() {
+  it("Validating input before updating the Databae", function() {
+    expect(admin.updateDetail(4444, "realAdmin@gmail.com", "newPass")).toMatch(
+      /Input a valid details/
+    );
+  });
 
-//     expect(admin.save()).toMatchObject(admin);
-//   });
+  it("Checking Email before accepting changes", function() {
+    expect(
+      admin.updateDetail("NewVictor", "martins@gmail.com", "pass1234")
+    ).toMatch(/User with this email already exist/);
+  });
+  it("Updating details on Validating inputs", function() {
+    expect(
+      admin.updateDetail("Admin", "realAdmin@gmail.com", "newPass")
+    ).toMatch(/Updated Succesfully/);
+  });
+});
 
-//   it("New Admin instances with JS 'instanceOf' ", function() {
-//     let admin = new Admin("Martins", "test@gmail.com", "pass1234");
+describe("Find user by their Id", function() {
+  it("Input must be a Number", function() {
+    expect(admin.findById("user1")).toMatch(/Please input a valid userId/);
+  });
+  it("Input must not be Empty", function() {
+    expect(admin.findById()).toMatch(/Please input a valid userId/);
+  });
+  it("ID must be a valid registered user ID", function() {
+    expect(admin.findById(3333)).toMatch(/Not found/);
+  });
+  it("Should not be able to find Admin", function() {
+    expect(admin.findById(3)).toMatch(/Not found/);
+  });
+  it("Return a valid user if input is a valid User ID", function() {
+    expect(martins.findById(2)).toEqual({
+      id: 2,
+      name: "Victor",
+      email: "victor@gmail.com",
+      isAdmin: false,
+      password: "pass1234"
+    });
+  });
+});
 
-//     expect(admin instanceof Admin).toBeTruthy();
-//   });
-// });
+describe("Find user by their Name", function() {
+  it("Input must be a String", function() {
+    expect(admin.findUserByName(2)).toMatch(/Input must be a valid username/);
+  });
+  it("Input must not be Empty", function() {
+    expect(admin.findUserByName()).toMatch(/Input must be a valid username/);
+  });
+  it("Name must be a valid registered User Name", function() {
+    expect(admin.findUserByName("Lekan")).toMatch(/Not found/);
+  });
+  it("Should not be able to find Admin", function() {
+    expect(admin.findUserByName("Admin")).toMatch(/Not found/);
+  });
+  it("Return a valid user if input is a valid User Name", function() {
+    expect(admin.findUserByName("Martins")).toEqual({
+      id: 1,
+      name: "Martins",
+      email: "martins@gmail.com",
+      isAdmin: false,
+      password: "pass1234"
+    });
+  });
+});
 
-// describe("Updating Admin details", function() {
-//   let admin;
-//   beforeEach(function() {
-//     admin = new Admin("Martins", "martins@gmail.com", "pass1234");
-//     admin.save();
-//   });
-//   it("Validating Admin input before updating the Databae", function() {
-//     expect(admin.updateDetail(4444, "martins@gmail.com", "newPass")).toMatch(
-//       /Input a valid details/
-//     );
-//   });
-//   it("Updating Admin details on Valid inputs", function() {
-//     expect(admin.updateDetail("New", "martins@gmail.com", "newPass")).toMatch(
-//       /Updated Succesfully/
-//     );
-//   });
-// });
-
-// describe("Find Admin/User by their Id", function() {
-//   let admin1;
-//   let admin2;
-//   beforeEach(function() {
-//     admin1 = new Admin("Martins", "martins@gmail.com", "pass1234");
-//     admin1.save();
-//     admin2 = new Admin("Victor", "victor@gmail.com", "pa234");
-//     admin2.save();
-//   });
-//   it("Input must be a Number", function() {
-//     expect(admin1.findById("admin1")).toMatch(/Please input a valid userId/);
-//   });
-//   it("Input must not be Empty", function() {
-//     expect(admin2.findById()).toMatch(/Please input a valid userId/);
-//   });
-//   it("Id must be a valid registered user ID", function() {
-//     expect(admin2.findById(33)).toMatch(/Not found/);
-//   });
-//   it("Return a valid user if input is a valid User ID", function() {
-//     expect(admin2.findById(15)).toBeDefined();
-//   });
-// });
-
-// describe("Find Admin/User by their Name", function() {
-//   let admin1;
-//   let admin2;
-//   let user;
-//   beforeEach(function() {
-//     admin1 = new Admin("Martins", "martins@gmail.com", "pass1234");
-//     admin1.save();
-//     admin2 = new Admin("Victor", "victor@gmail.com", "pa234");
-//     admin2.save();
-//     user = new User("New User", "new@gmail.com", "pa234");
-//     user.save();
-//   });
-//   it("Input must be a String", function() {
-//     expect(admin1.findUserByName(2)).toMatch(/Input must be a valid username/);
-//   });
-//   it("Input must not be Empty", function() {
-//     expect(admin2.findUserByName()).toMatch(/Input must be a valid username/);
-//   });
-//   it("Name must be a valid registered User Name", function() {
-//     expect(admin2.findUserByName("Lekan")).toMatch(/Not found/);
-//   });
-//   it("Return a valid user if input is a valid User Name", function() {
-//     expect(admin1.findUserByName("New User")).toEqual({
-//       id: 17,
-//       name: "New User",
-//       email: "new@gmail.com",
-//       isAdmin: false,
-//       password: "pa234"
-//     });
-//   });
-// });
-
-// describe("Creating Orders", function() {
-//   let admin;
-//   beforeEach(function() {
-//     admin = new Admin("Martins", "martins@gmail.com", "pass1234");
-//     admin.save();
-//   });
-//   it("Input must be a String", function() {
-//     expect(admin.createOrder(2)).toMatch(/Invalid Input/);
-//   });
-//   it("Input must not be Empty", function() {
-//     expect(admin.createOrder()).toMatch(/Invalid Input/);
-//   });
-//   it("Return a valid Order object", function() {
-//     expect(admin.createOrder("iPhone X")).toBeDefined();
-//   });
-// });
+describe("Creating Orders", function() {
+  it("Product must be a String", function() {
+    expect(admin.createOrder(2)).toMatch(/Invalid Product Name/);
+  });
+  it("Input must not be Empty", function() {
+    expect(admin.createOrder()).toMatch(/Invalid Product Name/);
+  });
+  it("Return a valid Order object", function() {
+    expect(admin.createOrder("iPhone X")).toBeDefined();
+  });
+});
 
 // describe("Reading all Users", function() {
 //   let admin;
