@@ -54,7 +54,7 @@ Admin.prototype.getAllOrders = function() {
 };
 
 Admin.prototype.readSingleOrder = function(orderId) {
-
+  return new Order().readSingleOrder();
 };
 
 Admin.prototype.updateOrder = function(orderId, product) {
