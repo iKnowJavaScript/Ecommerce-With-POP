@@ -74,6 +74,7 @@ Admin.prototype.deleteAllOrder = function() {
   return new Order().deleteAll();
 };
 
+Admin.prototype.AllOrders = new Order().all;
 module.exports = { Admin };
 
 // const admin = new Admin("admin", "admin@gmail.com", "newPass123")
