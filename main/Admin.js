@@ -50,7 +50,7 @@ Admin.prototype.deleteAllUser = function() {
 };
 
 Admin.prototype.readAllOdders = function() {
-  return Order.readAllOdders();
+  return new Order().readAllOdders();
 };
 
 Admin.prototype.readSingleOrder = function(orderId) {
@@ -103,7 +103,7 @@ Admin.prototype.deleteAllOrder = function() {
 
 module.exports = { Admin };
 
-// const admin = new Admin("admin", "admin@gmail.com", "newPass123")
+const admin = new Admin("admin", "admin@gmail.com", "newPass123")
 
-// console.log(admin.save())
-// console.log(admin.readAllUser());
+console.log(admin.save())
+console.log(admin.readAllOdders());
