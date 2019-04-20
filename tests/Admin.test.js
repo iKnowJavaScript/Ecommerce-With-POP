@@ -145,7 +145,6 @@ describe("Deleting all User", function() {
   });
 });
 
-
 //Order Test Case
 describe("Read all Order from the Database", function() {
   it("Should return all orders form the DB", function() {

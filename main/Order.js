@@ -82,7 +82,6 @@ Order.prototype.deleteAll = function() {
   return (orderDatabase = []);
 };
 
-Order.prototype.all = orderDatabase;
 
 module.exports = { Order };
 
