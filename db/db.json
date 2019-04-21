@@ -1,0 +1,59 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Joseph",
+      "email": "joe@mail.com",
+      "isAdmin": false,
+      "password": "pass1234"
+    },
+    {
+      "id": 2,
+      "name": "Martins",
+      "email": "martins@mail.com",
+      "isAdmin": false,
+      "password": "pass1234"
+    },
+    {
+      "id": 3,
+      "name": "Sodeeq",
+      "email": "sodeeq@mail.com",
+      "isAdmin": false,
+      "password": "pass1234"
+    },
+    {
+      "id": 5,
+      "name": "admin",
+      "email": "admin@gmail.com",
+      "isAdmin": true,
+      "password": "newPass123"
+    }
+  ],
+  "orders": [
+    {
+      "orderId": 1,
+      "timeOfOrder": "7:19:49 AM",
+      "dateOfOrder": "4/19/2019",
+      "product": "Iphone X",
+      "user_id": 4
+    },
+    {
+      "orderId": 2,
+      "timeOfOrder": "7:19:49 AM",
+      "dateOfOrder": "4/19/2019",
+      "product": [
+        "Iphone",
+        "Trouser",
+        "Headphone"
+      ],
+      "user_id": 4
+    },
+    {
+      "orderId": 3,
+      "timeOfOrder": "7:19:49 AM",
+      "dateOfOrder": "4/19/2019",
+      "product": "Samsung S8",
+      "user_id": 4
+    }
+  ]
+}
