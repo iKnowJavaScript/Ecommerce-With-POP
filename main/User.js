@@ -21,9 +21,8 @@ function getId(email) {
 
 User.prototype.save = function() {
   for (let user of userDatabase) {
-    if (user.email === this.email) {
+    if (user.email === this.email)
       return "ERROR REGISTERING: Email already exist.";
-    }
   }
 
   let user = {
@@ -48,9 +47,8 @@ User.prototype.updateDetail = function(name, email, password) {
   let id = getId(this.email);
 
   for (let item of userDatabase) {
-    if (item.email === email && item.id !== id) {
+    if (item.email === email && item.id !== id)
       return "User with this email already exist";
-    }
   }
 
   userDatabase.forEach(function(item) {
@@ -71,8 +69,8 @@ User.prototype.findById = function(idSearch) {
   for (let user of userDatabase) {
     if (user.id === idSearch && user.isAdmin === false) return user;
   }
-  
-  return "Not found";
+
+  return "ERROR: User Not found";
 };
 
 User.prototype.findUserByName = function(name) {

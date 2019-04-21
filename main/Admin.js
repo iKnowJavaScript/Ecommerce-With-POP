@@ -1,17 +1,13 @@
 const { User } = require("./User");
 const { Order } = require("./Order");
-let {
-  userDatabase,
-  updateUsertoDB,
-  orderDatabase
-} = require("../fs");
+let { userDatabase, updateUsertoDB } = require("../fs");
 
 const Admin = function(name, email, password) {
   User.call(this, name, email, password);
   this.isAdmin = true;
 };
 
-//Setting Admin as instance of User
+//Setting Admin as Sub-Class of User
 Admin.prototype = Object.create(User.prototype);
 //Pointing Admin constructor to itself so it can override properties
 Admin.prototype.constructor = Admin;
@@ -24,7 +20,6 @@ Admin.prototype.deleteUser = function(email) {
   if (typeof email !== "string") return "Input must be a valid email address";
 
   let newDb = [];
-
   for (let user of userDatabase) {
     if ((user.email === email) & (user.isAdmin === false)) {
       continue;
@@ -43,16 +38,10 @@ Admin.prototype.deleteUser = function(email) {
 
 //Delete all user
 Admin.prototype.deleteAllUser = function() {
-  let admins = [];
-  for (let user of userDatabase) {
-    if (user.isAdmin === true) {
-      admins.push(user);
-    } else {
-      continue;
-    }
-  }
-  console.log("All user has been deleted");
-  return (userDatabase = admins);
+  let adminsOnly = userDatabase.filter(user => user.isAdmin === true);
+
+  updateUsertoDB(adminsOnly);
+  return "All user has been deleted";
 };
 
 Admin.prototype.getAllOrders = function() {

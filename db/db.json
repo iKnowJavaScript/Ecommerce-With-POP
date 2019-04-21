@@ -22,13 +22,6 @@
       "password": "pass1234"
     },
     {
-      "id": 4,
-      "name": "New User",
-      "email": "User@anymail",
-      "isAdmin": false,
-      "password": "pass1234"
-    },
-    {
       "id": 5,
       "name": "admin",
       "email": "admin@gmail.com",
@@ -61,20 +54,6 @@
       "dateOfOrder": "4/19/2019",
       "product": "Samsung S8",
       "user_id": 4
-    },
-    {
-      "orderId": 4,
-      "timeOfOrder": "7:34:14 AM",
-      "dateOfOrder": "4/20/2019",
-      "product": "Cup",
-      "user_id": 2
-    },
-    {
-      "orderId": 5,
-      "timeOfOrder": "7:34:54 AM",
-      "dateOfOrder": "4/20/2019",
-      "product": "CupNew",
-      "user_id": 2
     }
   ]
 }

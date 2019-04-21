@@ -133,15 +133,7 @@ describe("Deleting a single User", function() {
 
 describe("Deleting all User", function() {
   it("Should delete All Users except Admins", function() {
-    expect(admin.deleteAllUser()).toEqual([
-      {
-        id: 3,
-        name: "Admin",
-        email: "realAdmin@gmail.com",
-        isAdmin: true,
-        password: "newPass"
-      }
-    ]);
+    expect(admin.deleteAllUser()).toMatch(/All user has been deleted/);
   });
 });
 
