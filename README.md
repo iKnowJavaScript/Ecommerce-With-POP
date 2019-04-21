@@ -33,13 +33,13 @@ Using Prototype Oriented Programming in Javascript to create a simple e-commerce
 ## Data Storage
 A json file was used to store and manipulate data in order to properly visualise the flow of data, this was implemented using Node fs Module.
 
-** **
+
 
 ## Testing
-Jest was used to test every functionality of this Project.   
-** **
+Jest was used to test every functionality of this Project.     
+
 Feel free to clone and `npm init` to get the feel of the app and `npm test` before adding more functionality if you wish.
-** **
+
 ## Acknowledgments
-** **
+
 * This was a tutorial to further deepens my Knowledge in Object Prototypal Inheritance in JavaScript so feel free to add to it.  
