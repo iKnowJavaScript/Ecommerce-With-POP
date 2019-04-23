@@ -10,9 +10,7 @@ describe("Testing Order Instances and saving it to Database", function() {
   });
 
   it("Saving instances to Database", function() {
-    expect(order.makeOrder("Cup", 3)).toMatch(
-      /Order Succesfully Added to Database/
-    );
+    expect(order.makeOrder("Cup", 3)).toMatch(/Order Succesfully Created/);
   });
 });
 

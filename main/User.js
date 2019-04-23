@@ -45,6 +45,7 @@ User.prototype.updateDetail = function(name, email, password) {
 
   //search if the new email is already taken
   let id = getId(this.email);
+  //if (!id) return "User not saved to Database";
 
   for (let item of userDatabase) {
     if (item.email === email && item.id !== id)
@@ -58,6 +59,7 @@ User.prototype.updateDetail = function(name, email, password) {
       item.password = password;
     }
   });
+
   updateUsertoDB(userDatabase);
   return "Updated Succesfully";
 };
@@ -90,7 +92,5 @@ User.prototype.createOrder = function(product) {
 
   return order.makeOrder(product, (user_id = getId(this.email)));
 };
-
-User.prototype.all = userDatabase;
 
 module.exports = { User, userDatabase };

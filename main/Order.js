@@ -21,7 +21,7 @@ Order.prototype.makeOrder = function(product, user_id) {
 
   saveOrderToDb(order);
 
-  return "Order Succesfully Added to Database";
+  return "Order Succesfully Created.";
 };
 
 Order.prototype.readAll = function() {

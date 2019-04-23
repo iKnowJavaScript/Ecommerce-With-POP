@@ -2,58 +2,54 @@
   "users": [
     {
       "id": 1,
-      "name": "Joseph",
-      "email": "joe@mail.com",
+      "name": "New Martins",
+      "email": "martins@gmail",
       "isAdmin": false,
-      "password": "pass1234"
+      "password": "newPassForMartins"
     },
     {
       "id": 2,
-      "name": "Martins",
-      "email": "martins@mail.com",
+      "name": "Joseph",
+      "email": "joseph@gmail",
       "isAdmin": false,
       "password": "pass1234"
     },
     {
       "id": 3,
-      "name": "Sodeeq",
-      "email": "sodeeq@mail.com",
+      "name": "Sodiq",
+      "email": "sodiq@gmail",
       "isAdmin": false,
       "password": "pass1234"
     },
     {
-      "id": 5,
-      "name": "admin",
+      "id": 4,
+      "name": "Charles",
+      "email": "charles@gmail",
+      "isAdmin": false,
+      "password": "anotherPass"
+    },
+    {
+      "id": 9,
+      "name": "Admin",
       "email": "admin@gmail.com",
       "isAdmin": true,
-      "password": "newPass123"
+      "password": "adminPass1234"
     }
   ],
   "orders": [
     {
       "orderId": 1,
-      "timeOfOrder": "7:19:49 AM",
-      "dateOfOrder": "4/19/2019",
-      "product": "Iphone X",
-      "user_id": 4
+      "timeOfOrder": "3:04:16 PM",
+      "dateOfOrder": "4/23/2019",
+      "product": "iPhone X",
+      "user_id": 1
     },
     {
       "orderId": 2,
-      "timeOfOrder": "7:19:49 AM",
-      "dateOfOrder": "4/19/2019",
-      "product": [
-        "Iphone",
-        "Trouser",
-        "Headphone"
-      ],
-      "user_id": 4
-    },
-    {
-      "orderId": 3,
-      "timeOfOrder": "7:19:49 AM",
-      "dateOfOrder": "4/19/2019",
-      "product": "Samsung S8",
-      "user_id": 4
+      "timeOfOrder": "3:06:28 PM",
+      "dateOfOrder": "4/23/2019",
+      "product": "Samsung",
+      "user_id": 3
     }
   ]
 }

@@ -55,7 +55,6 @@ function updateOrderToDB(database) {
 }
 
 const orderDatabase = readOrderFromDb();
-const userDatabase = readFromDb();
 
 module.exports = {
   saveUserToDb,
@@ -63,5 +62,6 @@ module.exports = {
   updateUsertoDB,
   saveOrderToDb,
   orderDatabase,
-  updateOrderToDB
+  updateOrderToDB,
+  another
 };
