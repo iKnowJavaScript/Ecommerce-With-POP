@@ -1,5 +1,6 @@
 const { Order } = require("./Order");
-const { saveUserToDb, userDatabase, updateUsertoDB } = require("../fs");
+let { saveUserToDb, userDatabase, updateUsertoDB } = require("./../fs");
+
 
 let counter = userDatabase.length;
 
@@ -12,7 +13,8 @@ const User = function(name, email, password) {
 };
 
 function getId(email) {
-  for (let item of userDatabase) {
+  let DB  = userDatabase()
+  for (let item of DB) {
     if (item.email === email) {
       return item.id;
     }
@@ -20,7 +22,8 @@ function getId(email) {
 }
 
 User.prototype.save = function() {
-  for (let user of userDatabase) {
+  let DB  = userDatabase()
+  for (let user of DB) {
     if (user.email === this.email)
       return "ERROR REGISTERING: Email already exist.";
   }
@@ -34,25 +37,26 @@ User.prototype.save = function() {
   };
 
   saveUserToDb(user);
-  console.log("Succesfully Added to Database");
+  console.log("Succesfully Added to Database")
   return user;
 };
 
 User.prototype.updateDetail = function(name, email, password) {
+  let DB  = userDatabase()
+
   for (let i = 0; i < arguments.length; i++) {
     if (typeof arguments[i] !== "string") return `Input a valid details`;
   }
-
+  
   //search if the new email is already taken
   let id = getId(this.email);
-  //if (!id) return "User not saved to Database";
 
-  for (let item of userDatabase) {
+  for (let item of DB) {
     if (item.email === email && item.id !== id)
       return "User with this email already exist";
   }
 
-  userDatabase.forEach(function(item) {
+  DB.forEach(function(item) {
     if (item.id === id) {
       item.name = name;
       item.email = email;
@@ -60,15 +64,16 @@ User.prototype.updateDetail = function(name, email, password) {
     }
   });
 
-  updateUsertoDB(userDatabase);
+  updateUsertoDB(DB);
   return "Updated Succesfully";
 };
 
 User.prototype.findById = function(idSearch) {
+  let DB  = userDatabase()
   if (idSearch === "" || typeof idSearch !== "number")
     return "Please input a valid userId";
 
-  for (let user of userDatabase) {
+  for (let user of DB) {
     if (user.id === idSearch && user.isAdmin === false) return user;
   }
 
@@ -76,10 +81,11 @@ User.prototype.findById = function(idSearch) {
 };
 
 User.prototype.findUserByName = function(name) {
+  let DB  = userDatabase()
   if (name === "" || typeof name !== "string")
     return "Input must be a valid username";
 
-  for (let user of userDatabase) {
+  for (let user of DB) {
     if (user.name === name && user.isAdmin === false) return user;
   }
   return "Not found";

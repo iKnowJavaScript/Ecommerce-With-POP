@@ -2,6 +2,8 @@ const { User } = require("./User");
 const { Order } = require("./Order");
 let { userDatabase, updateUsertoDB } = require("../fs");
 
+//userDatabase = userDatabase()
+
 const Admin = function(name, email, password) {
   User.call(this, name, email, password);
   this.isAdmin = true;
@@ -13,14 +15,16 @@ Admin.prototype = Object.create(User.prototype);
 Admin.prototype.constructor = Admin;
 
 Admin.prototype.readAllUser = function() {
-  return userDatabase.filter(user => user.isAdmin === false);
+  let DB = userDatabase()
+  return DB.filter(user => user.isAdmin === false);
 };
 
 Admin.prototype.deleteUser = function(email) {
+  let DB = userDatabase()
   if (typeof email !== "string") return "Input must be a valid email address";
 
   let newDb = [];
-  for (let user of userDatabase) {
+  for (let user of DB) {
     if ((user.email === email) & (user.isAdmin === false)) {
       continue;
     } else {
@@ -28,7 +32,7 @@ Admin.prototype.deleteUser = function(email) {
     }
   }
 
-  if (newDb.length !== userDatabase.length) {
+  if (newDb.length !== DB.length) {
     updateUsertoDB(newDb);
     return "User has been deleted";
   } else {
@@ -38,7 +42,8 @@ Admin.prototype.deleteUser = function(email) {
 
 //Delete all user
 Admin.prototype.deleteAllUser = function() {
-  let adminsOnly = userDatabase.filter(user => user.isAdmin === true);
+  let DB = userDatabase()
+  let adminsOnly = DB.filter(user => user.isAdmin === true);
 
   updateUsertoDB(adminsOnly);
   return "All user has been deleted";
@@ -66,7 +71,3 @@ Admin.prototype.deleteAllOrder = function() {
 
 module.exports = { Admin };
 
-// const admin = new Admin("admin", "admin@gmail.com", "newPass123")
-
-// console.log(admin.save())
-// console.log(admin.readAllOdders());

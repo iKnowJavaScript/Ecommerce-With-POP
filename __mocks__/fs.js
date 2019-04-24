@@ -11,7 +11,7 @@ function saveUserToDb(input) {
   return
 }
 
-function readFromDb() {
+function userDatabase() {
   return Users;
 }
 
@@ -25,7 +25,7 @@ function saveOrderToDb(input) {
   return
 }
 
-function readOrderFromDb() { 
+function orderDatabase() { 
   return Orders
 }
 
@@ -33,8 +33,8 @@ function updateOrderToDB(database) {
   return Orders = database;
 }
 
-const orderDatabase = readOrderFromDb();
-const userDatabase = readFromDb();
+//const orderDatabase = readOrderFromDb();
+//const userDatabase = readFromDb();
 module.exports = {
   saveUserToDb,
   userDatabase,

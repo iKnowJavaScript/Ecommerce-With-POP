@@ -1,55 +1,12 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "New Martins",
-      "email": "martins@gmail",
-      "isAdmin": false,
-      "password": "newPassForMartins"
-    },
-    {
-      "id": 2,
-      "name": "Joseph",
-      "email": "joseph@gmail",
-      "isAdmin": false,
-      "password": "pass1234"
-    },
-    {
-      "id": 3,
-      "name": "Sodiq",
-      "email": "sodiq@gmail",
-      "isAdmin": false,
-      "password": "pass1234"
-    },
-    {
-      "id": 4,
-      "name": "Charles",
-      "email": "charles@gmail",
-      "isAdmin": false,
-      "password": "anotherPass"
-    },
-    {
-      "id": 9,
+      "id": 5,
       "name": "Admin",
       "email": "admin@gmail.com",
       "isAdmin": true,
       "password": "adminPass1234"
     }
   ],
-  "orders": [
-    {
-      "orderId": 1,
-      "timeOfOrder": "3:04:16 PM",
-      "dateOfOrder": "4/23/2019",
-      "product": "iPhone X",
-      "user_id": 1
-    },
-    {
-      "orderId": 2,
-      "timeOfOrder": "3:06:28 PM",
-      "dateOfOrder": "4/23/2019",
-      "product": "Samsung",
-      "user_id": 3
-    }
-  ]
+  "orders": []
 }
