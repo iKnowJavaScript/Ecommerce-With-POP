@@ -1,6 +1,6 @@
-let { saveOrderToDb, orderDatabase, updateOrderToDB } = require("../fs");
+let { saveOrderToDb, orderDatabase, updateOrderToDB } = require("./../fs");
 
-let counter = orderDatabase.length;
+let counter = orderDatabase().length;
 
 const Order = function(product) {
   this.id = ++counter;
@@ -21,47 +21,50 @@ Order.prototype.makeOrder = function(product, user_id) {
 
   saveOrderToDb(order);
 
-  return "Order Succesfully Added to Database";
+  return "Order Succesfully Created.";
 };
 
 Order.prototype.readAll = function() {
-  return orderDatabase;
+  return orderDatabase();
 };
 
 Order.prototype.readSingle = function(orderId) {
+  let DB = orderDatabase()
   if (orderId === "" || typeof orderId !== "number")
     return "Input a valid Order ID";
 
-  let order = orderDatabase.find(order => order.orderId === orderId);
+  let order = DB.find(order => order.orderId === orderId);
 
   return !order ? "Order not found" : order;
 };
 
 Order.prototype.update = function(orderId, product) {
+  let DB = orderDatabase()
   if (orderId === "" || typeof orderId !== "number")
     return `Order Id must be Number`;
   if (product === "" || typeof product !== "string") return `Invalid Product`;
 
-  let match = orderDatabase.find(order => order.orderId === orderId);
+  let match = DB.find(order => order.orderId === orderId);
   if (match == undefined) return "Product not found";
 
-  orderDatabase.map(order => {
+  DB.map(order => {
     if (order.orderId === orderId) {
       order.product = product;
     }
   });
 
-  updateOrderToDB(orderDatabase);
+  updateOrderToDB(DB);
   return "Updated Succesfully";
 };
 
 Order.prototype.deleteById = function(orderId) {
+  let DB = orderDatabase()
   if (orderId === "" || typeof orderId !== "number")
     return "Input must be a valid order ID";
 
   let newDb = [];
 
-  for (let order of orderDatabase) {
+  for (let order of DB) {
     if (order.orderId === orderId) {
       continue;
     } else {
@@ -69,7 +72,7 @@ Order.prototype.deleteById = function(orderId) {
     }
   }
 
-  if (newDb.length !== orderDatabase.length) {
+  if (newDb.length !== DB.length) {
     updateOrderToDB(newDb);
     return "Order has been deleted";
   } else {
@@ -78,16 +81,13 @@ Order.prototype.deleteById = function(orderId) {
 };
 
 Order.prototype.deleteAll = function() {
+  let DB = orderDatabase()
+  DB.length = 0;
   console.log("All order has been deleted");
-  return (orderDatabase = []);
+ 
+  return updateOrderToDB(DB)
 };
 
 
 module.exports = { Order };
 
-// let order = new Order();
-// console.log(order.update(5, "CupNew"));
-// // console.log(order.readSingleOrder(3))
-// console.log(order.makeOrder("sbdsnjdks", 3));
-
-// console.log(orderDatabase)

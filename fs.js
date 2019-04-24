@@ -12,7 +12,7 @@ function saveUserToDb(input) {
   );
 }
 
-function readFromDb() {
+function userDatabase() {
   let jsonData = fs.readFileSync("./DB/db.json", "utf8");
   jsonData = JSON.parse(jsonData);
 
@@ -40,7 +40,7 @@ function saveOrderToDb(input) {
   );
 }
 
-function readOrderFromDb() {
+function orderDatabase() {
   let jsonData = fs.readFileSync("./DB/db.json", "utf8");
   jsonData = JSON.parse(jsonData);
   return jsonData["orders"];
@@ -54,8 +54,6 @@ function updateOrderToDB(database) {
   return fs.writeFileSync("./DB/db.json", JSON.stringify(db, null, 2), "utf8");
 }
 
-const orderDatabase = readOrderFromDb();
-const userDatabase = readFromDb();
 
 module.exports = {
   saveUserToDb,
